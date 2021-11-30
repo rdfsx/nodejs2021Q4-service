@@ -1,11 +1,37 @@
-const router = require('express').Router();
+const Router = require('@koa/router');
 const User = require('./user.model');
 const usersService = require('./user.service');
 
-router.route('/').get(async (req, res) => {
+const router = new Router( { prefix: '/users' } );
+
+router.get("/", async (ctx, next) => {
   const users = await usersService.getAll();
-  // map user fields to exclude secret fields like "password"
-  res.json(users.map(User.toResponse));
+  ctx.body = users.map(User.toResponse);
+  next();
 });
 
-module.exports = router;
+router.get("/:userId",async (ctx, next) => {
+  const user = await usersService.getUserById(ctx.params.userId);
+  ctx.body = User.toResponse(user);
+  next();
+});
+
+router.post("/", async (ctx, next) => {
+  const user = await usersService.createUser(ctx.request.body);
+  ctx.body = User.toResponse(user);
+  next();
+});
+
+router.put("/:userId", async (ctx, next) => {
+  const user = await usersService.updateUser(ctx.params.userId, ctx.request.body);
+  ctx.body = User.toResponse(user);
+  next();
+});
+
+router.delete("/:userId", async (ctx, next) => {
+  await usersService.deleteUser(ctx.params.userId);
+  ctx.status = 204;
+  next();
+});
+
+module.exports = router.routes();
