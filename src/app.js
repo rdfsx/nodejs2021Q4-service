@@ -6,6 +6,7 @@ const Router = require('@koa/router');
 const bodyParser = require('koa-bodyparser');
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
+const taskRouter = require('./resources/tasks/task.router');
 
 const router = new Router();
 
@@ -34,5 +35,6 @@ router.get('/', (ctx, next) => {
 app.use(router.routes());
 app.use(userRouter);
 app.use(boardRouter);
+app.use(taskRouter);
 
 module.exports = app;

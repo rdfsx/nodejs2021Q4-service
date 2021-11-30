@@ -9,22 +9,23 @@ router.get("/", async (ctx, next) => {
 });
 
 router.get("/:boardId",async (ctx, next) => {
-  ctx.body = await boardsService.getBoardById(ctx.params.boardId);
+  ctx.body = await boardsService.getById(ctx.params.boardId);
   next();
 });
 
 router.post("/", async (ctx, next) => {
-  ctx.body = await boardsService.createBoard(ctx.request.body);
+  ctx.body = await boardsService.create(ctx.request.body);
+  ctx.status = 201;
   next();
 });
 
 router.put("/:boardId", async (ctx, next) => {
-  ctx.body = await boardsService.updateBoard(ctx.params.boardId, ctx.request.body);
+  ctx.body = await boardsService.update(ctx.params.boardId, ctx.request.body);
   next();
 });
 
 router.delete("/:boardId", async (ctx, next) => {
-  await boardsService.deleteBoard(ctx.params.boardId);
+  await boardsService.delete_(ctx.params.boardId);
   ctx.status = 204;
   next();
 });
