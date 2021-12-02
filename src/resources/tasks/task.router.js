@@ -11,13 +11,18 @@ router.get("/", async (ctx, next) => {
 
 router.get("/:taskId",async (ctx, next) => {
   ctx.body = await tasksService.getById(ctx.params.taskId);
+  if (!ctx.body) {
+    ctx.status = 404;
+  }
   ctx.set("Content-Type", "application/json");
   next();
 });
 
 router.post("/", async (ctx, next) => {
+  ctx.request.body.boardId = ctx.params.boardId;
   ctx.body = await tasksService.create(ctx.request.body);
   ctx.set("Content-Type", "application/json");
+  ctx.status = 201;
   next();
 });
 

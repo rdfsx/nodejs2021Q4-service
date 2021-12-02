@@ -1,4 +1,5 @@
 const User = require('./user.model');
+const { tasks } = require('../tasks/task.memory.repository');
 
 const users = [];
 
@@ -15,6 +16,11 @@ const update = async (id, user) => {
 };
 const delete_ = async (id) => {
   const index = users.findIndex((u) => u.id === id);
+  tasks.forEach((task) => {
+    if (task.userId === id) {
+      Object.assign(task, { userId: null });
+    }
+  });
   users.splice(index, 1);
   return true;
 };

@@ -1,4 +1,5 @@
 const Board = require('./board.model');
+const { tasks } = require('../tasks/task.memory.repository');
 
 const boards = [];
 
@@ -15,6 +16,11 @@ const update = async (id, board) => {
 };
 const delete_ = async (id) => {
   const index = boards.findIndex((b) => b.id === id);
+  tasks.forEach((task) => {
+    if (task.boardId === id) {
+      tasks.splice(tasks.indexOf(task), 1);
+    }
+  });
   boards.splice(index, 1);
   return true;
 };

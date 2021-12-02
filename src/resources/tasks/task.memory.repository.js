@@ -19,4 +19,4 @@ const delete_ = async (id) => {
   return true;
 };
 
-module.exports = { getAll, create, getById, update, delete_ };
+module.exports = { getAll, tasks, create, getById, update, delete_ };

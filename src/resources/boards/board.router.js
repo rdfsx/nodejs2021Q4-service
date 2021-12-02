@@ -11,6 +11,9 @@ router.get("/", async (ctx, next) => {
 
 router.get("/:boardId",async (ctx, next) => {
   ctx.body = await boardsService.getById(ctx.params.boardId);
+  if (!ctx.body) {
+    ctx.status = 404;
+  }
   ctx.set("Content-Type", "application/json");
   next();
 });
