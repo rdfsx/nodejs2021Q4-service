@@ -4,7 +4,7 @@ const tasksService = require('./task.service');
 const router = new Router( { prefix: '/boards/:boardId/tasks' } );
 
 router.get("/", async (ctx, next) => {
-  ctx.body = await tasksService.getAll();
+  ctx.body = await tasksService.getAll(ctx.params.boardId);
   ctx.set("Content-Type", "application/json");
   next();
 });

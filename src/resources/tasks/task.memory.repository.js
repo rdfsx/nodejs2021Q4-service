@@ -2,7 +2,7 @@ const Task = require('./task.model');
 
 const tasks = [];
 
-const getAll = async () => tasks;
+const getAll = async (boardId) => tasks.filter(task => task.boardId === boardId);
 const create = async (task) => {
   const taskDb = new Task(task);
   tasks.push(taskDb);

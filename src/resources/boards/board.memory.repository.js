@@ -16,12 +16,15 @@ const update = async (id, board) => {
 };
 const delete_ = async (id) => {
   const index = boards.findIndex((b) => b.id === id);
-  tasks.forEach((task) => {
-    if (task.boardId === id) {
-      tasks.splice(tasks.indexOf(task), 1);
-    }
-  });
   boards.splice(index, 1);
+  let i = 0;
+  while (i < tasks.length) {
+    if (tasks[i].boardId === id) {
+      tasks.splice(i, 1);
+    } else {
+      i += 1;
+    }
+  }
   return true;
 };
 
