@@ -13,7 +13,6 @@ const router = new Router();
 const app = new Koa();
 const spec = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
-// app.use(express.json());
 app.use(bodyParser());
 
 
