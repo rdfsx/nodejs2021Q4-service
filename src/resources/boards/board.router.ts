@@ -1,12 +1,12 @@
-const Router = require('@koa/router');
-const boardsService = require('./board.service');
+import * as Router from 'koa-router';
+import * as boardsService from './board.service';
 
-const router = new Router( { prefix: '/boards' } );
+export const router = new Router( { prefix: '/boards' } );
 
 router.get("/", async (ctx, next) => {
   ctx.body = await boardsService.getAll();
   ctx.set("Content-Type", "application/json");
-  next();
+  await next();
 });
 
 router.get("/:boardId",async (ctx, next) => {
@@ -15,27 +15,25 @@ router.get("/:boardId",async (ctx, next) => {
     ctx.status = 404;
   }
   ctx.set("Content-Type", "application/json");
-  next();
+  await next();
 });
 
 router.post("/", async (ctx, next) => {
   ctx.body = await boardsService.create(ctx.request.body);
   ctx.set("Content-Type", "application/json");
   ctx.status = 201;
-  next();
+  await next();
 });
 
 router.put("/:boardId", async (ctx, next) => {
   ctx.body = await boardsService.update(ctx.params.boardId, ctx.request.body);
   ctx.set("Content-Type", "application/json");
-  next();
+  await next();
 });
 
 router.delete("/:boardId", async (ctx, next) => {
   await boardsService.delete_(ctx.params.boardId);
   ctx.set("Content-Type", "application/json");
   ctx.status = 204;
-  next();
+  await next();
 });
-
-module.exports = router.routes();

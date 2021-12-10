@@ -1,21 +1,28 @@
-const Router = require('@koa/router');
-const User = require('./user.model');
-const usersService = require('./user.service');
+import * as Router from 'koa-router';
+import * as usersService from './user.service';
+import User from './user.model';
 
-const router = new Router( { prefix: '/users' } );
+export const router = new Router( { prefix: '/users' } );
 
 router.get("/", async (ctx, next) => {
   const users = await usersService.getAll();
   ctx.body = users.map(User.toResponse);
   ctx.set("Content-Type", "application/json");
-  next();
+  await next();
 });
 
 router.get("/:userId",async (ctx, next) => {
   const user = await usersService.getById(ctx.params.userId);
+  if (!user) {
+    ctx.status = 404;
+    ctx.body = {
+      message: "User not found"
+    };
+    return next();
+  }
   ctx.body = User.toResponse(user);
   ctx.set("Content-Type", "application/json");
-  next();
+  await next();
 });
 
 router.post("/", async (ctx, next) => {
@@ -23,7 +30,7 @@ router.post("/", async (ctx, next) => {
   ctx.body = User.toResponse(user);
   ctx.set("Content-Type", "application/json");
   ctx.status = 201;
-  next();
+  await next();
 });
 
 router.put("/:userId", async (ctx, next) => {
@@ -31,13 +38,11 @@ router.put("/:userId", async (ctx, next) => {
   ctx.body = User.toResponse(user);
   ctx.set("Content-Type", "application/json");
   ctx.status = 200;
-  next();
+  await next();
 });
 
 router.delete("/:userId", async (ctx, next) => {
   await usersService.delete_(ctx.params.userId);
   ctx.status = 204;
-  next();
+  await next();
 });
-
-module.exports = router.routes();
