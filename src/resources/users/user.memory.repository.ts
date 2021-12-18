@@ -21,6 +21,7 @@ export const update = async (id: string, user: User) => {
     users[index] = userDb;
     return userDb;
   }
+  return undefined;
 };
 export const delete_ = async (id: string) => {
   const index = users.findIndex((u) => u.id === id);
