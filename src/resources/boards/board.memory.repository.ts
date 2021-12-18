@@ -12,7 +12,8 @@ export const create = async (board: Board) => {
 export const getById = async (id: string) => boards.find((board) => board.id === id);
 export const update = async (id: string, board: Board) => {
   const index = boards.findIndex((b) => b.id === id);
-  return Object.assign(boards[index], board);
+  boards[index] = board;
+  return board;
 };
 export const delete_ = async (id: string) => {
   const index = boards.findIndex((b) => b.id === id);

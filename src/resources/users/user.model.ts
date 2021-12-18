@@ -16,8 +16,7 @@ export default class User {
     this.password = password;
   }
 
-  static toResponse(user: User) {
-    const { id, name, login } = user;
-    return { id, name, login };
+  get toResponse() {
+    return { id: this.id, name: this.name, login: this.login };
   }
 }

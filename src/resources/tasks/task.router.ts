@@ -1,7 +1,7 @@
 import * as Router from 'koa-router';
 import * as tasksService from './task.service';
 
-export const router = new Router( { prefix: '/users' } );
+export const router = new Router( { prefix: '/boards/:boardId/tasks' } );
 
 router.get("/", async (ctx, next) => {
   ctx.body = await tasksService.getAll(ctx.params.boardId);

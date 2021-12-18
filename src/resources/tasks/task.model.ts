@@ -9,13 +9,13 @@ export default class Task {
 
   description: string;
 
-  userId: string;
+  userId: string | null;
 
   boardId: string;
 
   columnId: string;
 
-  constructor(title: string, order: number, description: string, userId: string, boardId: string, columnId: string) {
+  constructor(title: string, order: number, description: string, userId: string | null, boardId: string, columnId: string) {
     this.title = title;
     this.order = order;
     this.description = description;

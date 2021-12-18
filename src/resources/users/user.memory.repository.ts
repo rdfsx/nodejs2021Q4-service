@@ -10,16 +10,23 @@ export const create = async (user: User) => {
   users.push(userDb);
   return userDb;
 };
-export const getById = async (id: string) => users.find((user) => user.id === id);
+export const getById = async (id: string) => users.find((user: User) => user.id === id);
 export const update = async (id: string, user: User) => {
+  const userDb = users.find((u) => u.id === id);
   const index = users.findIndex((u) => u.id === id);
-  return Object.assign(users[index], user);
+  if (userDb) {
+    userDb.name = user.name;
+    userDb.login = user.login;
+    userDb.password = user.password;
+    users[index] = userDb;
+    return userDb;
+  }
 };
 export const delete_ = async (id: string) => {
   const index = users.findIndex((u) => u.id === id);
   tasks.forEach((task: Task) => {
     if (task.userId === id) {
-      Object.assign(task, { userId: null });
+      tasks[tasks.indexOf(task)].userId = null;
     }
   });
   users.splice(index, 1);
