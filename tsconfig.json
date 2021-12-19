@@ -12,7 +12,8 @@
     },
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strict": true
+    "strict": true,
+    "noImplicitAny": true
   },
   "include": [
     "src_old/**/*"
