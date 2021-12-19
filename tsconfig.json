@@ -16,6 +16,6 @@
     "noImplicitAny": true
   },
   "include": [
-    "src_old/**/*"
+    "src/**/*"
   ]
 }
